@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mahesh Kadamkode | Founder of Incubateer</title>
+  <meta name="description" content="Mahesh Kadamkode, solo founder of Incubateer from Kerala, India. Websites for people I believe in, and a grant platform that tells founders which grants they can actually win.">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mahesh Kadamkode">
+  <meta property="og:description" content="Founder of Incubateer. Websites for people I believe in.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@MahesK9">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/frames/f001.webp">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Loader -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__name">Mahesh Kadamkode</div>
+    <div class="loader__count"><span id="loader-num">0</span></div>
+    <div class="loader__bar"><span id="loader-bar"></span></div>
+  </div>
+
+  <!-- Cursor (desktop only) -->
+  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+  <header class="nav">
+    <a href="#top" class="nav__logo">Mahesh K.</a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav__cta">Say hello</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO: scroll pushes the camera into the laptop -->
+    <section class="hero" id="hero" aria-label="Intro">
+      <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+      <img class="hero__fallback" src="assets/frames/f001.webp" alt="Mahesh Kadamkode holding an open laptop" width="1000" height="720">
+
+      <div class="hero__intro">
+        <h1 class="hero__name">
+          <span class="line"><span>Mahesh</span></span>
+          <span class="line"><span>Kadamkode</span></span>
+        </h1>
+        <div class="hero__meta">
+          <p><span class="dim">Founder,</span> Incubateer</p>
+          <p><span class="dim">Based in</span> Kerala, India</p>
+        </div>
+        <p class="hero__lede">I build websites for people I <em>believe in.</em></p>
+        <div class="hero__scroll"><span>Scroll</span><i></i></div>
+      </div>
+
+      <div class="hero__end">
+        <p class="eyebrow">Selected work</p>
+        <p class="hero__end-title">Let me show you<br>what I've <em class="stripe-text">built.</em></p>
+      </div>
+    </section>
+
+    <!-- STATEMENT -->
+    <section class="statement" aria-label="About the work">
+      <p class="statement__text" data-words>
+        A jeweller open since 1985. A burger joint that closes at 4 AM. A saree brand that starts with a single thread. A growth marketer in Florida. And Incubateer, for every founder hunting a grant they can actually win.
+      </p>
+    </section>
+
+    <!-- MARQUEE -->
+    <section class="marquee" aria-label="Projects">
+      <div class="marquee__row" data-dir="-1">
+        <div class="marquee__track">
+          <span class="mq">Incubateer</span><img class="mq-img" src="assets/work/incubateer-cover.webp" alt="" loading="lazy">
+          <span class="mq">Diana Gold</span><img class="mq-img" src="assets/work/diana-cover.webp" alt="" loading="lazy">
+          <span class="mq">Smashed</span><img class="mq-img" src="assets/work/smashed-cover.webp" alt="" loading="lazy">
+          <span class="mq">Saeli</span><img class="mq-img" src="assets/work/saeli-cover.webp" alt="" loading="lazy">
+          <span class="mq">Evan Lee</span><img class="mq-img" src="assets/work/evan-cover.webp" alt="" loading="lazy">
+        </div>
+      </div>
+      <div class="marquee__row marquee__row--outline" data-dir="1">
+        <div class="marquee__track">
+          <span class="mq">Grants</span><span class="mq-dot"></span>
+          <span class="mq">Jewellery</span><span class="mq-dot"></span>
+          <span class="mq">Burgers</span><span class="mq-dot"></span>
+          <span class="mq">Handloom</span><span class="mq-dot"></span>
+          <span class="mq">Growth</span><span class="mq-dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED WORK -->
+    <section class="work" id="work" aria-label="Featured work">
+      <header class="section-head">
+        <p class="eyebrow">Featured</p>
+        <h2 class="section-title">Three I'd show <em>first.</em></h2>
+      </header>
+
+      <article class="case" data-case>
+        <div class="case__inner">
+          <div class="case__device">
+            <div class="browser">
+              <div class="browser__bar"><i></i><i></i><i></i><span>incubateer.com</span></div>
+              <div class="browser__screen"><img src="assets/work/incubateer-long.webp" alt="Incubateer homepage scrolling" width="1000" height="4444"></div>
+            </div>
+          </div>
+          <div class="case__info">
+            <p class="case__num">01 <span>/ My product</span></p>
+            <h3 class="case__title">Incubateer</h3>
+            <p class="case__desc">Founders tell it their stage, sector and state. It reads the rules of 8,500+ grants and scores each one: strong match, worth a look, or long shot. No inflated promises.</p>
+            <ul class="tags"><li>Product</li><li>Design</li><li>Build</li><li>India and the Middle East</li></ul>
+            <a class="link-arrow" href="https://incubateer.com/" target="_blank" rel="noopener" data-cursor="Visit">Visit incubateer.com</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="case case--flip" data-case>
+        <div class="case__inner">
+          <div class="case__device">
+            <div class="browser">
+              <div class="browser__bar"><i></i><i></i><i></i><span>Diana Gold, Payyanur</span></div>
+              <div class="browser__screen"><img src="assets/work/diana-long.webp" alt="Diana Gold website scrolling" width="1000" height="4444" loading="lazy"></div>
+            </div>
+          </div>
+          <div class="case__info">
+            <p class="case__num">02 <span>/ Jewellery, Payyanur</span></p>
+            <h3 class="case__title">Diana Gold</h3>
+            <p class="case__desc">A Payyanur jeweller open since 1985, moving into a bigger store at Clock Tower, Perumba. Dark, warm and gold, with WhatsApp one tap away for prices and questions.</p>
+            <ul class="tags"><li>Website</li><li>Design</li><li>Local SEO</li></ul>
+            <a class="link-arrow" href="https://dazzling-starburst-4495fc.netlify.app/" target="_blank" rel="noopener" data-cursor="Visit">See the site</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="case" data-case>
+        <div class="case__inner">
+          <div class="case__device">
+            <div class="browser">
+              <div class="browser__bar"><i></i><i></i><i></i><span>Evan Lee, Naples FL</span></div>
+              <div class="browser__screen"><img src="assets/work/evan-long.webp" alt="Evan Lee website scrolling" width="1000" height="4444" loading="lazy"></div>
+            </div>
+          </div>
+          <div class="case__info">
+            <p class="case__num">03 <span>/ Personal brand, USA</span></p>
+            <h3 class="case__title">Evan Lee</h3>
+            <p class="case__desc">A growth marketer in Naples, Florida, who lets results do the talking. Big type, his face, his numbers up front, and one clear button: book a call.</p>
+            <ul class="tags"><li>Website</li><li>Design</li><li>Copy</li></ul>
+            <a class="link-arrow" href="https://evan-henna.vercel.app/" target="_blank" rel="noopener" data-cursor="Visit">See the site</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- SPIN: every project on a rotating ring -->
+    <section class="spin" id="spin" aria-label="All projects">
+      <div class="spin__head">
+        <p class="eyebrow">Every build</p>
+        <h2 class="spin__title">Spin <em>through</em> it all</h2>
+      </div>
+      <div class="spin__stage">
+        <div class="ring-wrap">
+        <div class="ring">
+          <a class="panel" href="https://incubateer.com/" target="_blank" rel="noopener" data-cursor="Visit"><img src="assets/work/incubateer-cover.webp" alt="Incubateer" loading="lazy"><span>Incubateer</span></a>
+          <a class="panel" href="https://dazzling-starburst-4495fc.netlify.app/" target="_blank" rel="noopener" data-cursor="Visit"><img src="assets/work/diana-cover.webp" alt="Diana Gold" loading="lazy"><span>Diana Gold</span></a>
+          <a class="panel" href="https://smashed-zeta.vercel.app/" target="_blank" rel="noopener" data-cursor="Visit"><img src="assets/work/smashed-cover.webp" alt="Smashed Burgers and Co." loading="lazy"><span>Smashed</span></a>
+          <a class="panel" href="https://saeli-stories.netlify.app/" target="_blank" rel="noopener" data-cursor="Visit"><img src="assets/work/saeli-cover.webp" alt="Saeli Stories" loading="lazy"><span>Saeli Stories</span></a>
+          <a class="panel" href="https://evan-henna.vercel.app/" target="_blank" rel="noopener" data-cursor="Visit"><img src="assets/work/evan-cover.webp" alt="Evan Lee" loading="lazy"><span>Evan Lee</span></a>
+          <a class="panel" href="https://incubateer.com/" target="_blank" rel="noopener" data-cursor="Visit" aria-hidden="true" tabindex="-1"><img src="assets/work/incubateer-cover.webp" alt="" loading="lazy"><span>Incubateer</span></a>
+          <a class="panel" href="https://dazzling-starburst-4495fc.netlify.app/" target="_blank" rel="noopener" data-cursor="Visit" aria-hidden="true" tabindex="-1"><img src="assets/work/diana-cover.webp" alt="" loading="lazy"><span>Diana Gold</span></a>
+          <a class="panel" href="https://smashed-zeta.vercel.app/" target="_blank" rel="noopener" data-cursor="Visit" aria-hidden="true" tabindex="-1"><img src="assets/work/smashed-cover.webp" alt="" loading="lazy"><span>Smashed</span></a>
+          <a class="panel" href="https://saeli-stories.netlify.app/" target="_blank" rel="noopener" data-cursor="Visit" aria-hidden="true" tabindex="-1"><img src="assets/work/saeli-cover.webp" alt="" loading="lazy"><span>Saeli Stories</span></a>
+          <a class="panel" href="https://evan-henna.vercel.app/" target="_blank" rel="noopener" data-cursor="Visit" aria-hidden="true" tabindex="-1"><img src="assets/work/evan-cover.webp" alt="" loading="lazy"><span>Evan Lee</span></a>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDEX LIST -->
+    <section class="index" aria-label="Project list">
+      <header class="section-head">
+        <p class="eyebrow">Index</p>
+        <h2 class="section-title">All <em>projects</em></h2>
+      </header>
+      <ul class="index__list">
+        <li><a href="https://incubateer.com/" target="_blank" rel="noopener" data-preview="assets/work/incubateer-cover.webp" data-cursor="Visit"><span class="i-name">Incubateer</span><span class="i-type">Product</span><span class="i-place">India and the Middle East</span><span class="i-go" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://dazzling-starburst-4495fc.netlify.app/" target="_blank" rel="noopener" data-preview="assets/work/diana-cover.webp" data-cursor="Visit"><span class="i-name">Diana Gold</span><span class="i-type">Jewellery</span><span class="i-place">Payyanur, Kerala</span><span class="i-go" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://smashed-zeta.vercel.app/" target="_blank" rel="noopener" data-preview="assets/work/smashed-cover.webp" data-cursor="Visit"><span class="i-name">Smashed Burgers &amp; Co.</span><span class="i-type">Restaurant</span><span class="i-place">Kochi, Kerala</span><span class="i-go" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://saeli-stories.netlify.app/" target="_blank" rel="noopener" data-preview="assets/work/saeli-cover.webp" data-cursor="Visit"><span class="i-name">Saeli Stories</span><span class="i-type">Handloom sarees</span><span class="i-place">Kerala</span><span class="i-go" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://evan-henna.vercel.app/" target="_blank" rel="noopener" data-preview="assets/work/evan-cover.webp" data-cursor="Visit"><span class="i-name">Evan Lee</span><span class="i-type">Personal brand</span><span class="i-place">Naples, Florida</span><span class="i-go" aria-hidden="true">↗</span></a></li>
+      </ul>
+      <img class="index__preview" alt="" aria-hidden="true">
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about" aria-label="About Mahesh">
+      <div class="about__photo"><img src="assets/img/mahesh.webp" alt="Mahesh Kadamkode smiling, wearing a dark teal shirt" width="800" height="1200" loading="lazy"></div>
+      <div class="about__text">
+        <p class="eyebrow">About</p>
+        <h2 class="about__title">Hi, I'm <em>Mahesh.</em></h2>
+        <p data-reveal>I'm a solo founder from Kerala. I run Incubateer, a grant platform that tells founders the truth: which grants they can win, which are worth a look, and which are long shots.</p>
+        <p data-reveal>Every site here started as a conversation with a friend about what their business needs. I build with Claude Code and Google AI Studio, and I keep at the details until a page feels right.</p>
+        <dl class="facts" data-reveal>
+          <div><dt>Building</dt><dd>Incubateer</dd></div>
+          <div><dt>Based in</dt><dd>Kerala, India</dd></div>
+          <div><dt>Way of working</dt><dd>Bootstrapped. India-first. Founders everywhere.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact" aria-label="Contact">
+      <p class="eyebrow">Contact</p>
+      <h2 class="contact__title flip">Let's <em>talk.</em></h2>
+      <p class="contact__sub">Building something, need a site, or looking for a speaker on founder funding? Write to me.</p>
+      <a class="contact__email" href="mailto:maheshkadangod@gmail.com" data-cursor="Email">maheshkadangod@gmail.com <span aria-hidden="true">↗</span></a>
+      <div class="contact__grid">
+        <div>
+          <p class="dim">Elsewhere</p>
+          <a href="https://www.linkedin.com/in/maheshkadamkode/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/MahesK9" target="_blank" rel="noopener">X</a>
+          <a href="https://www.instagram.com/maheshabhiz/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/maheshabhiz" target="_blank" rel="noopener">Facebook</a>
+        </div>
+        <div>
+          <p class="dim">Product</p>
+          <a href="https://incubateer.com/" target="_blank" rel="noopener">incubateer.com</a>
+          <a href="https://app.incubateer.com/" target="_blank" rel="noopener">app.incubateer.com</a>
+        </div>
+        <div>
+          <p class="dim">Local time</p>
+          <p><span id="clock">--:--</span> in Kerala</p>
+        </div>
+      </div>
+      <footer class="foot">
+        <span>&copy; <span id="year">2026</span> Mahesh Kadamkode</span>
+        <a href="#top">Back to top ↑</a>
+      </footer>
+    </section>
+  </main>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="assets/vendor/lenis.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
