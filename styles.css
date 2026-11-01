@@ -70,7 +70,7 @@ body::after {
   60% { transform: translate(-2%, -1%); } 80% { transform: translate(3%, 3%); } 100% { transform: translate(0, 0); }
 }
 
-.waves { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; overflow: visible; }
+.strands { position: fixed; left: 0; top: 0; z-index: 0; pointer-events: none; }
 
 /* ---------- Gradient type ---------- */
 .section-title em, .spin__title em, .about__title em, .ribbon__line em, .hero__lede em,
@@ -550,4 +550,4 @@ body::after {
 .no-motion .ring { display: flex; gap: 16px; width: auto; overflow-x: auto; padding: 0 var(--gutter) 20px; aspect-ratio: auto; }
 .no-motion .panel { position: relative; flex: 0 0 min(70vw, 420px); aspect-ratio: 16/10; }
 .ring-wrap { transform-style: preserve-3d; }
-@media (prefers-reduced-motion: reduce) { .stripe-text, .aurora i, body::after { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .stripe-text, .aurora i, body::after { animation: none; } .strands { opacity: .6; } }
