@@ -509,6 +509,21 @@ body::after {
   .pi-why__photo { max-height: 60vh; }
 }
 
+/* ---------- WhatsApp + call ---------- */
+.btn svg { width: 18px; height: 18px; flex: none; }
+.contact__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 clamp(36px, 6vh, 64px); }
+.contact .btn--ghost { border-color: rgba(236,230,218,.4); color: var(--ink); }
+.wa-float {
+  position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 60;
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px 12px 14px; border-radius: 99px;
+  background: linear-gradient(110deg, #f4f8f5 0%, #dff2ea 55%, #dbe8f6 100%); color: #063f37; font-weight: 600; font-size: 15px;
+  box-shadow: 0 16px 40px -12px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.2);
+  transform: translateY(140%); opacity: 0; transition: transform .5s var(--ease), opacity .4s;
+}
+.wa-float svg { width: 20px; height: 20px; }
+.wa-float.is-on { transform: none; opacity: 1; }
+@media (max-width: 520px) { .wa-float span { display: none; } .wa-float { padding: 14px; } }
+
 /* ---------- Contact ---------- */
 .contact {
   color: var(--ink);
@@ -532,7 +547,7 @@ body::after {
 .contact__email span { display: inline-block; transition: transform .4s var(--ease); }
 .contact__email:hover span { transform: translate(6px, -6px); }
 .contact__grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: clamp(60px, 12vh, 140px);
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: clamp(60px, 12vh, 140px);
 }
 .contact__grid p { margin: 0 0 10px; }
 .contact__grid a { display: block; width: fit-content; margin-bottom: 6px; font-weight: 500; }
@@ -541,7 +556,7 @@ body::after {
   display: flex; justify-content: space-between; gap: 16px; margin-top: clamp(60px, 10vh, 120px);
   padding-top: 20px; border-top: 1px solid rgba(236,230,218,.2); font-size: 14px;
 }
-@media (max-width: 700px) { .contact__grid { grid-template-columns: 1fr 1fr; } .contact__grid > div:last-child { grid-column: 1 / -1; } }
+@media (max-width: 700px) { .contact__grid { grid-template-columns: 1fr 1fr; } }
 
 /* ---------- Reduced motion / no JS animation ---------- */
 .no-motion .hero__end { display: none; }

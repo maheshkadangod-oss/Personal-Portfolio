@@ -25,6 +25,7 @@
 
   if (!hasGsap || reduce) {
     document.documentElement.classList.add('no-motion');
+    const waf = document.querySelector('.wa-float'); if (waf) waf.classList.add('is-on');
     document.getElementById('loader').remove();
     document.body.classList.remove('is-loading');
     return;
@@ -360,6 +361,13 @@
     trigger: '.contact', start: 'top 40px', end: 'bottom top',
     toggleClass: { targets: '.nav', className: 'on-accent' }
   });
+
+  // ---------- Floating WhatsApp: shows after the hero, hides over the contact block ----------
+  const wa = document.querySelector('.wa-float');
+  const waState = { past: false, atContact: false };
+  const waSet = () => wa.classList.toggle('is-on', waState.past && !waState.atContact);
+  ScrollTrigger.create({ trigger: '.ribbon', start: 'top 80%', onToggle: s => { waState.past = s.isActive || s.progress > 0; waSet(); }, end: 'max' });
+  ScrollTrigger.create({ trigger: '.contact', start: 'top 85%', end: 'max', onToggle: s => { waState.atContact = s.isActive; waSet(); } });
 
   // ---------- Contact rises up ----------
   gsap.from('.contact', {
