@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="assets/frames/f001.webp">
+  <link rel="preload" as="image" href="assets/img/mahesh-hero.webp">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -43,26 +43,21 @@
 
   <main id="top">
 
-    <!-- HERO: scroll pushes the camera into the laptop -->
+    <!-- HERO: Rosa-style name with a blended portrait that moves on scroll -->
     <section class="hero" id="hero" aria-label="Intro">
-      <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
-      <img class="hero__fallback" src="assets/frames/f001.webp" alt="Mahesh Kadamkode holding an open laptop" width="1000" height="720">
+      <div class="hero__photo"><img src="assets/img/mahesh-hero.webp" alt="Mahesh Kadamkode holding an open laptop" width="1010" height="941"></div>
 
       <div class="hero__intro">
-        <h1 class="hero__name">
-          <span class="line"><span>Mahesh</span></span>
-          <span class="line"><span>Kadamkode</span></span>
-        </h1>
-        <div class="hero__meta">
-          <p><span class="dim">Founder,</span> Incubateer</p>
-          <p><span class="dim">Based in</span> Kerala, India</p>
-        </div>
-        <p class="hero__lede">I build websites for people I <em>believe in.</em></p>
+        <p class="hero__kicker">Selected work<br><span class="dim">and one product</span></p>
+        <a class="hero__all" href="#work" data-cursor="View">All work <span aria-hidden="true">↗</span></a>
+        <h1 class="hero__name">Mahesh</h1>
+        <p class="hero__lede">Founder of Incubateer. I build websites for people I <em>believe in.</em></p>
+        <p class="hero__contact"><span class="dim">Get in touch at</span><br><a href="mailto:maheshkadangod@gmail.com">maheshkadangod@gmail.com</a></p>
         <div class="hero__scroll"><span>Scroll</span><i></i></div>
       </div>
 
       <div class="hero__end">
-        <p class="eyebrow">Selected work</p>
+        <p class="eyebrow">Kadamkode, Kerala</p>
         <p class="hero__end-title">Let me show you<br>what I've <em class="stripe-text">built.</em></p>
       </div>
     </section>
@@ -120,7 +115,7 @@
     <section class="work" id="work" aria-label="Featured work">
       <header class="section-head">
         <p class="eyebrow">Featured</p>
-        <h2 class="section-title">Three I'd show <em>first.</em></h2>
+        <h2 class="section-title">Four I'd show <em>first.</em></h2>
       </header>
 
       <article class="case" data-case>
@@ -176,6 +171,23 @@
           </div>
         </div>
       </article>
+      <article class="case case--flip" data-case>
+        <div class="case__inner">
+          <div class="case__device">
+            <div class="browser">
+              <div class="browser__bar"><i></i><i></i><i></i><span>Smashed Burgers, Kochi</span></div>
+              <div class="browser__screen"><img src="assets/work/smashed-long.webp" alt="Smashed Burgers and Co. website scrolling" width="1000" height="4444" loading="lazy"></div>
+            </div>
+          </div>
+          <div class="case__info">
+            <p class="case__num">04 <span>/ Template, restaurant</span></p>
+            <h3 class="case__title">Smashed</h3>
+            <p class="case__desc">A late-night restaurant template, shown live on Smashed Burgers &amp; Co. in Kochi. Loud type, big food shots, open 6 PM to 4 AM, and two taps from Zomato.</p>
+            <ul class="tags"><li>Template</li><li>Restaurants</li><li>Cafes</li><li>Cloud kitchens</li></ul>
+            <a class="link-arrow" href="https://smashed-zeta.vercel.app/" target="_blank" rel="noopener" data-cursor="Visit">See the template live</a>
+          </div>
+        </div>
+      </article>
     </section>
 
     <!-- SPIN: every project on a rotating ring -->
@@ -227,25 +239,27 @@
       <img class="index__preview" alt="" aria-hidden="true">
     </section>
 
-    <!-- MIST: calm down into the about section -->
-    <section class="mist" aria-hidden="true">
-      <p class="mist__line">Now, the person <em>behind it.</em></p>
+    <!-- ABOUT: Rosa-style "Nice to meet you" -->
+    <section class="about" id="about" aria-label="About Mahesh">
+      <h2 class="about__title">Nice to <em>meet you.</em></h2>
+      <div class="about__grid">
+        <div class="about__photo"><img src="assets/img/mahesh-about.webp" alt="Mahesh Kadamkode smiling, holding a laptop" width="1010" height="941" loading="lazy"></div>
+        <div class="about__text">
+          <p class="eyebrow">About</p>
+          <p data-reveal>I'm Mahesh, a solo founder from Kerala. I run Incubateer, a grant platform that tells founders the truth: which grants they can win, which are worth a look, and which are long shots.</p>
+          <p data-reveal>The templates here started as sites for friends: a jeweller, a burger joint, a saree brand and a marketer. Each one is live, so you can click through it before you ask for your own. I build with Claude Code and Google AI Studio, and I keep at the details until a page feels right.</p>
+          <dl class="facts" data-reveal>
+            <div><dt>Building</dt><dd>Incubateer</dd></div>
+            <div><dt>Based in</dt><dd>Kerala, India</dd></div>
+            <div><dt>Way of working</dt><dd>Bootstrapped. India-first. Founders everywhere.</dd></div>
+          </dl>
+        </div>
+      </div>
     </section>
 
-    <!-- ABOUT -->
-    <section class="about" id="about" aria-label="About Mahesh">
-      <div class="about__photo"><img src="assets/img/mahesh.webp" alt="Mahesh Kadamkode smiling, wearing a dark teal shirt" width="800" height="1200" loading="lazy"></div>
-      <div class="about__text">
-        <p class="eyebrow">About</p>
-        <h2 class="about__title">Hi, I'm <em>Mahesh.</em></h2>
-        <p data-reveal>I'm a solo founder from Kerala. I run Incubateer, a grant platform that tells founders the truth: which grants they can win, which are worth a look, and which are long shots.</p>
-        <p data-reveal>The templates here started as sites for friends: a jeweller, a burger joint, a saree brand and a marketer. Each one is live, so you can click through it before you ask for your own. I build with Claude Code and Google AI Studio, and I keep at the details until a page feels right.</p>
-        <dl class="facts" data-reveal>
-          <div><dt>Building</dt><dd>Incubateer</dd></div>
-          <div><dt>Based in</dt><dd>Kerala, India</dd></div>
-          <div><dt>Way of working</dt><dd>Bootstrapped. India-first. Founders everywhere.</dd></div>
-        </dl>
-      </div>
+    <!-- MIST: calm down into the Incubateer block -->
+    <section class="mist" aria-hidden="true">
+      <p class="mist__line">Now, the thing <em>I'm building.</em></p>
     </section>
 
     <!-- INCUBATEER: join -->

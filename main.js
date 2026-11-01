@@ -88,103 +88,29 @@
     });
   });
 
-  // ---------- Hero frame sequence ----------
-  const FRAMES = 120;
-  const canvas = document.getElementById('hero-canvas');
-  const ctx = canvas.getContext('2d');
-  const images = new Array(FRAMES);
-  const state = { frame: 0, p: 0 };
-  let needsDraw = true;
-
-  const frameSrc = i => `assets/frames/f${String(i + 1).padStart(3, '0')}.webp`;
-
-  function sizeCanvas() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(canvas.clientWidth * dpr);
-    canvas.height = Math.round(canvas.clientHeight * dpr);
-    needsDraw = true;
-  }
-
-  function nearest(i) {
-    for (let d = 0; d < FRAMES; d++) {
-      const a = images[i - d], b = images[i + d];
-      if (a && a.complete && a.naturalWidth) return a;
-      if (b && b.complete && b.naturalWidth) return b;
-    }
-    return null;
-  }
-
-  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
-  function draw() {
-    const img = nearest(state.frame);
-    if (!img) return;
-    const cw = canvas.width, ch = canvas.height;
-    const iw = img.naturalWidth, ih = img.naturalHeight;
-    const p = state.p;
-    ctx.fillStyle = '#0e100f';
-    ctx.fillRect(0, 0, cw, ch);
-
-    const cover = Math.max(cw / iw, ch / ih);
-    const portrait = cw / ch < 1;
-    let s, y;
-    if (portrait) {
-      const start = Math.min((cw * 1.55) / iw, (ch * 0.64) / ih);
-      s = start + (cover * 1.12 - start) * ease(Math.min(1, p / 0.9));
-      const h = ih * s;
-      y = (ch - h) / 2 + ch * 0.03 * (1 - p);
-    } else {
-      s = cover * (1 + 0.1 * p * p);
-      y = (ch - ih * s) / 2;
-    }
-    const w = iw * s, h = ih * s, x = (cw - w) / 2;
-    ctx.drawImage(img, x, y, w, h);
-
-    // soften the image edges into the page colour (visible on tall screens)
-    if (y > 0) {
-      const f = Math.min(140, h * 0.2);
-      let g = ctx.createLinearGradient(0, y, 0, y + f);
-      g.addColorStop(0, 'rgba(14,16,15,1)'); g.addColorStop(1, 'rgba(14,16,15,0)');
-      ctx.fillStyle = g; ctx.fillRect(0, y - 1, cw, f);
-      g = ctx.createLinearGradient(0, y + h - f, 0, y + h);
-      g.addColorStop(0, 'rgba(14,16,15,0)'); g.addColorStop(1, 'rgba(14,16,15,1)');
-      ctx.fillStyle = g; ctx.fillRect(0, y + h - f, cw, f + 1);
-    }
-  }
-
-  gsap.ticker.add(() => { if (needsDraw) { needsDraw = false; draw(); } });
-  sizeCanvas();
-  window.addEventListener('resize', sizeCanvas);
+  // ---------- Hero: blended portrait, giant name ----------
+  const heroPhoto = document.querySelector('.hero__photo');
+  const heroImg = heroPhoto.querySelector('img');
+  const nameBands = stripify(document.querySelector('.hero__name'), 7);
+  const isPortrait = () => window.innerWidth / window.innerHeight < 1;
 
   // ---------- Loader ----------
   const num = document.getElementById('loader-num');
   const bar = document.getElementById('loader-bar');
-  let loaded = 0, started = false;
+  let started = false;
   const shown = { v: 0 };
-
-  function onFrame() {
-    loaded++;
-    gsap.to(shown, {
-      v: Math.round((loaded / FRAMES) * 100), duration: .4, overwrite: true,
-      onUpdate: () => { num.textContent = Math.round(shown.v); bar.style.width = shown.v + '%'; }
-    });
-    needsDraw = true;
-    if (loaded >= FRAMES) start();
-  }
-  for (let i = 0; i < FRAMES; i++) {
-    const img = new Image();
-    img.decoding = 'async';
-    img.onload = onFrame;
-    img.onerror = onFrame;
-    img.src = frameSrc(i);
-    images[i] = img;
-  }
-  setTimeout(start, 9000); // never trap anyone behind a slow connection
+  gsap.to(shown, {
+    v: 90, duration: 1.2, ease: 'power2.out',
+    onUpdate: () => { num.textContent = Math.round(shown.v); bar.style.width = shown.v + '%'; }
+  });
+  const ready = heroImg.decode ? heroImg.decode().catch(() => {}) : Promise.resolve();
+  Promise.all([ready, new Promise(r => setTimeout(r, 1200))]).then(start);
+  setTimeout(start, 6000);
 
   function start() {
     if (started) return;
     started = true;
-    num.textContent = '100'; bar.style.width = '100%';
+    gsap.to(shown, { v: 100, duration: .3, onUpdate: () => { num.textContent = Math.round(shown.v); bar.style.width = shown.v + '%'; } });
     const tl = gsap.timeline({
       onComplete: () => {
         document.getElementById('loader').remove();
@@ -193,32 +119,45 @@
         ScrollTrigger.refresh();
       }
     });
-    tl.to('#loader', { yPercent: -100, duration: 1.1, ease: 'expo.inOut', delay: .25 })
-      .from('.hero__canvas', { scale: 1.15, duration: 1.6, ease: 'expo.out' }, '-=.6')
-      .from('.hero__name .line > span', { yPercent: 110, duration: 1.1, stagger: .08, ease: 'expo.out' }, '-=1.3')
-      .from('.hero__meta p, .hero__lede, .hero__scroll', { y: 20, opacity: 0, duration: .8, stagger: .06, ease: 'power3.out' }, '-=.8');
+    tl.to('#loader', { yPercent: -100, duration: 1.1, ease: 'expo.inOut', delay: .35 })
+      .fromTo(heroPhoto, { clipPath: 'inset(0 0 0 100%)' }, { clipPath: 'inset(0 0 0 0%)', duration: 1.6, ease: 'expo.inOut' }, '-=.7')
+      .from(heroImg, { scale: 1.25, duration: 2, ease: 'expo.out' }, '<')
+      .fromTo(nameBands, { xPercent: i => (i % 2 ? 1 : -1) * (30 + i * 8), opacity: 0 },
+        { xPercent: 0, opacity: 1, duration: 1.4, stagger: .05, ease: 'expo.out' }, '-=1.4')
+      .from('.hero__kicker, .hero__all, .hero__lede, .hero__contact, .hero__scroll',
+        { y: 20, opacity: 0, duration: .8, stagger: .06, ease: 'power3.out' }, '-=1');
   }
 
-  // Hero scroll: push into the laptop
+  // Scroll: the portrait drifts across, the name splits into stripes, then the flip line lands
   const heroTl = gsap.timeline({
     scrollTrigger: {
-      trigger: '#hero', start: 'top top', end: () => '+=' + window.innerHeight * 2.6,
-      pin: true, scrub: true, anticipatePin: 1,
-      onUpdate: self => {
-        state.p = self.progress;
-        state.frame = Math.min(FRAMES - 1, Math.round(Math.min(1, self.progress / 0.86) * (FRAMES - 1)));
-        needsDraw = true;
-      }
+      trigger: '#hero', start: 'top top', end: () => '+=' + window.innerHeight * 1.7,
+      pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true
     }
   });
-  const nameBands = stripify(document.querySelector('.hero__name'), 7);
   heroTl
     .to({}, { duration: 1 }, 0)
-    .to(nameBands, { xPercent: i => (i % 2 ? 1 : -1) * (18 + i * 9), ease: 'power1.in', duration: .2 }, 0)
-    .to('.hero__intro', { opacity: 0, y: -80, ease: 'none', duration: .22 }, 0)
-    .fromTo('.hero__end', { opacity: 0, rotateX: 180, transformPerspective: 900, scale: .9 },
-      { opacity: 1, rotateX: 0, scale: 1, ease: 'power2.inOut', duration: .26 }, .66);
+    .to(heroPhoto, {
+      x: () => isPortrait() ? 0 : -window.innerWidth * 0.4,
+      y: () => isPortrait() ? -window.innerHeight * 0.12 : 0,
+      scale: () => isPortrait() ? .82 : .8, rotation: -3, ease: 'power2.inOut', duration: .7
+    }, 0)
+    .to(nameBands, { xPercent: i => (i % 2 ? 1 : -1) * (16 + i * 8), opacity: .0, ease: 'power1.in', duration: .45 }, 0)
+    .to('.hero__kicker, .hero__all, .hero__lede, .hero__contact, .hero__scroll', { opacity: 0, y: -40, ease: 'none', duration: .25 }, 0)
+    .fromTo('.hero__end', { opacity: 0, rotateX: 180, transformPerspective: 900 },
+      { opacity: 1, rotateX: 0, ease: 'power2.inOut', duration: .3 }, .5)
+    .to(heroPhoto, { opacity: .35, duration: .2 }, .8);
 
+  // Desktop: the portrait and name drift with the mouse
+  if (finePointer) {
+    const ix = gsap.quickTo(heroImg, 'x', { duration: 1.2, ease: 'power3' });
+    const iy = gsap.quickTo(heroImg, 'y', { duration: 1.2, ease: 'power3' });
+    const nx = gsap.quickTo('.hero__name', 'x', { duration: 1.4, ease: 'power3' });
+    window.addEventListener('mousemove', e => {
+      const dx = e.clientX / window.innerWidth - .5, dy = e.clientY / window.innerHeight - .5;
+      ix(dx * -28); iy(dy * -18); nx(dx * 22);
+    });
+  }
 
   // ---------- Ribbon: screenshots weave through the headline ----------
   const rcards = [...document.querySelectorAll('.rcard')];
@@ -406,16 +345,16 @@
     scrollTrigger: { trigger: '.inc__chips', start: 'top 85%' }
   });
 
-  // ---------- About photo reveal ----------
-  gsap.fromTo('.about__photo', { clipPath: 'inset(100% 0 0 0 round 16px)' }, {
-    clipPath: 'inset(0% 0 0 0 round 16px)', duration: 1.4, ease: 'expo.inOut',
-    scrollTrigger: { trigger: '.about', start: 'top 70%' }
+  // ---------- About: the portrait rises and drifts as you scroll ----------
+  gsap.fromTo('.about__photo', { yPercent: 35, xPercent: -10, rotation: 4, scale: .85, opacity: 0 }, {
+    yPercent: 0, xPercent: 0, rotation: 0, scale: 1, opacity: 1, ease: 'power2.out',
+    scrollTrigger: { trigger: '.about', start: 'top 85%', end: 'center 60%', scrub: 1 }
   });
-  gsap.fromTo('.about__photo img', { yPercent: -8 }, {
-    yPercent: 0, ease: 'none', scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true }
+  gsap.to('.about__photo img', {
+    yPercent: -6, ease: 'none', scrollTrigger: { trigger: '.about', start: 'center center', end: 'bottom top', scrub: true }
   });
 
-  // ---------- Nav switches colour over the orange block ----------
+  // ---------- Nav switches colour over the teal block ----------
   ScrollTrigger.create({
     trigger: '.contact', start: 'top 40px', end: 'bottom top',
     toggleClass: { targets: '.nav', className: 'on-accent' }
@@ -484,6 +423,13 @@
       });
       el.addEventListener('mouseleave', () => gsap.to(preview, { opacity: 0, scale: .8, duration: .3 }));
     });
+    // Scrolling with a still mouse never fires mouseleave, so hide hover states on scroll
+    const hideHover = () => {
+      gsap.to(preview, { opacity: 0, scale: .8, duration: .2, overwrite: true });
+      cursor.classList.remove('is-big');
+    };
+    window.addEventListener('wheel', hideHover, { passive: true });
+    window.addEventListener('scroll', () => { if (+gsap.getProperty(preview, 'opacity') > 0) hideHover(); }, { passive: true });
     document.querySelectorAll('.nav__cta, .link-arrow').forEach(el => {
       const mx = gsap.quickTo(el, 'x', { duration: .4, ease: 'power3' });
       const my = gsap.quickTo(el, 'y', { duration: .4, ease: 'power3' });
