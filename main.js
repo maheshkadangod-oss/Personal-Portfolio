@@ -162,23 +162,24 @@
   // ---------- Ribbon: screenshots weave through the headline ----------
   const rcards = [...document.querySelectorAll('.rcard')];
   const rib = { t: 0, drift: 0, active: false };
+  // Film runs left to right in a zig-zag through the clear band between the two lines of text
+  const tri = v => (2 / Math.PI) * Math.asin(Math.sin(v));
   function renderRibbon() {
     const W = window.innerWidth, H = window.innerHeight, n = rcards.length;
-    const cardW = rcards[0].offsetWidth || 200;
-    const spacing = Math.max(cardW * 1.05, W * 0.2);
-    const total = spacing * n;
+    const cardW = rcards[0].offsetWidth || 200, cardH = cardW * 0.625;
+    const spacing = cardW * 1.12;
+    const total = Math.max(spacing * n, W + spacing * 2);
     const offset = rib.t * total * 0.9 + rib.drift;
-    const amp = Math.min(H * 0.2, 180);
+    const amp = Math.max(0, Math.min(H * 0.09, (H * 0.36 - cardH) / 2, 80));
+    const freq = Math.PI / (spacing * 2.2);
     rcards.forEach((c, i) => {
       const x = ((((i * spacing - offset) % total) + total) % total) - total / 2;
+      const y = tri(x * freq) * amp;
+      const slope = (tri((x + 1) * freq) - tri((x - 1) * freq)) / 2 * amp;
+      const rot = Math.atan(slope) * 57.3;
       const u = x / (W * 0.5);
-      const y = Math.sin(u * 1.7) * amp;
-      const depth = Math.cos(u * 2.3 + 0.6);
-      const slope = Math.cos(u * 1.7) * 1.7 * amp / (W * 0.5);
-      const s = 0.72 + 0.34 * (depth + 1) / 2;
-      const fade = gsap.utils.clamp(0, 1, 1.6 - Math.abs(u) * 0.75);
-      c.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) perspective(900px) rotateY(${(-u * 38).toFixed(1)}deg) rotateZ(${(Math.atan(slope) * 57.3).toFixed(1)}deg) scale(${s.toFixed(3)})`;
-      c.style.zIndex = depth > 0 ? 3 : 1;
+      const fade = gsap.utils.clamp(0, 1, 1.7 - Math.abs(u) * 0.8);
+      c.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${rot.toFixed(1)}deg)`;
       c.style.opacity = fade.toFixed(3);
     });
   }
