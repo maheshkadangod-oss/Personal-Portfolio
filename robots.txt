@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mahesh-portfolio-mocha-omega.vercel.app/sitemap.xml

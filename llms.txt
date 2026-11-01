@@ -1,0 +1,32 @@
+# Mahesh Kadamkode
+
+> Mahesh Kadamkode is a solo, bootstrapped founder from Kerala, India. He builds Incubateer, a grant and funding discovery platform for startup founders, and makes websites for people he believes in.
+
+## About
+- Name: Mahesh Kadamkode (also Mahesh K)
+- Based in: Kerala, India
+- Building: Incubateer (https://incubateer.com/), app at https://app.incubateer.com/
+- Contact: maheshkadangod@gmail.com, WhatsApp or phone +91 90614 63367
+- LinkedIn: https://www.linkedin.com/in/maheshkadamkode/
+- X: https://x.com/MahesK9
+
+## Incubateer
+- Tagline: Find the grants you'll actually win.
+- What it does: indexes 8,500+ grants and programmes, reads each one's eligibility rules and scores it against a startup's stage, sector and state.
+- Scores: strong match, worth a look, long shot, likely not eligible. Each score comes with the reason behind it.
+- Coverage: India-first (2,800+ India grants and schemes), 130+ Middle East programmes, open to founders anywhere. 650+ investors and VC firms are counted separately.
+- It never submits applications on a founder's behalf.
+- Status: early access.
+- More: https://mahesh-portfolio-mocha-omega.vercel.app/incubateer
+
+## Website templates
+Each started as a site for a friend and is shown as a template example, not a client case study.
+- Diana Gold, jewellery: https://dazzling-starburst-4495fc.netlify.app/
+- Smashed Burgers & Co., restaurant: https://smashed-zeta.vercel.app/
+- Saeli Stories, fashion: https://saeli-stories.netlify.app/
+- Evan Lee, personal brand: https://evan-henna.vercel.app/
+- Alfred Dominic, developer portfolio: https://alfred-one-taupe.vercel.app/
+
+## Pages
+- Home: https://mahesh-portfolio-mocha-omega.vercel.app/
+- Incubateer: https://mahesh-portfolio-mocha-omega.vercel.app/incubateer

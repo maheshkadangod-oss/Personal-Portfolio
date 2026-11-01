@@ -244,7 +244,7 @@ body::after {
   animation: stripe-move 6s linear infinite; padding-right: .06em;
 }
 @keyframes stripe-move { to { background-position: 160px 0; } }
-.statement, .marquee, .work, .index, .about, .contact, .ribbon { overflow-x: clip; }
+.statement, .marquee, .work, .index, .about, .contact, .ribbon, .pi-problem, .pi-score, .pi-how, .pi-numbers { overflow-x: clip; }
 
 /* ---------- Ribbon: headline with screenshots weaving through ---------- */
 .ribbon { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
@@ -569,3 +569,35 @@ body::after {
 .no-motion .panel { position: relative; flex: 0 0 min(70vw, 420px); aspect-ratio: 16/10; }
 .ring-wrap { transform-style: preserve-3d; }
 @media (prefers-reduced-motion: reduce) { .stripe-text, .aurora i, body::after { animation: none; } .aura-fall { opacity: .7; } }
+
+/* ---------- SEO helpers ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Breadcrumbs (Incubateer page) */
+.crumbs { margin-bottom: 18px; font-size: 13px; color: var(--dim); }
+.crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.crumbs li + li::before { content: "/"; margin-right: 8px; opacity: .5; }
+.crumbs a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.crumbs a:hover { border-color: var(--accent); }
+
+/* ---------- FAQ ---------- */
+.faq { position: relative; z-index: 1; padding: clamp(80px, 14vh, 160px) 0; overflow-x: clip; }
+.faq__list { padding: 0 var(--gutter); max-width: 1100px; border-top: 1px solid var(--line); }
+.faq__item { border-bottom: 1px solid var(--line); }
+.faq__item summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: clamp(18px, 3vh, 28px) 0;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item h3 { margin: 0; font-size: clamp(19px, 2.2vw, 30px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
+.faq__item summary:hover h3 { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.faq__item i { position: relative; flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); transition: transform .5s var(--ease), background .3s; }
+.faq__item i::before, .faq__item i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; background: var(--ink); transform: translate(-50%, -50%); }
+.faq__item i::after { transform: translate(-50%, -50%) rotate(90deg); }
+.faq__item[open] i { transform: rotate(45deg); background: rgba(163,217,197,.14); }
+.faq__item p { margin: 0 0 clamp(20px, 3vh, 30px); max-width: 68ch; color: var(--dim); font-size: clamp(15px, 1.2vw, 18px); line-height: 1.6; }
+
+/* Odd card count on phones: let the last card span the row */
+@media (max-width: 700px) {
+  .assemble__grid .acard:last-child:nth-child(even) { grid-column: span 2; }
+}
