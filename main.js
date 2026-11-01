@@ -122,7 +122,7 @@
     const cw = canvas.width, ch = canvas.height;
     const iw = img.naturalWidth, ih = img.naturalHeight;
     const p = state.p;
-    ctx.fillStyle = '#0b0b0b';
+    ctx.fillStyle = '#0e100f';
     ctx.fillRect(0, 0, cw, ch);
 
     const cover = Math.max(cw / iw, ch / ih);
@@ -144,10 +144,10 @@
     if (y > 0) {
       const f = Math.min(140, h * 0.2);
       let g = ctx.createLinearGradient(0, y, 0, y + f);
-      g.addColorStop(0, 'rgba(11,11,11,1)'); g.addColorStop(1, 'rgba(11,11,11,0)');
+      g.addColorStop(0, 'rgba(14,16,15,1)'); g.addColorStop(1, 'rgba(14,16,15,0)');
       ctx.fillStyle = g; ctx.fillRect(0, y - 1, cw, f);
       g = ctx.createLinearGradient(0, y + h - f, 0, y + h);
-      g.addColorStop(0, 'rgba(11,11,11,0)'); g.addColorStop(1, 'rgba(11,11,11,1)');
+      g.addColorStop(0, 'rgba(14,16,15,0)'); g.addColorStop(1, 'rgba(14,16,15,1)');
       ctx.fillStyle = g; ctx.fillRect(0, y + h - f, cw, f + 1);
     }
   }
@@ -216,7 +216,49 @@
     .to({}, { duration: 1 }, 0)
     .to(nameBands, { xPercent: i => (i % 2 ? 1 : -1) * (18 + i * 9), ease: 'power1.in', duration: .2 }, 0)
     .to('.hero__intro', { opacity: 0, y: -80, ease: 'none', duration: .22 }, 0)
-    .fromTo('.hero__end', { opacity: 0, scale: .9 }, { opacity: 1, scale: 1, ease: 'power2.out', duration: .12 }, .72);
+    .fromTo('.hero__end', { opacity: 0, rotateX: 180, transformPerspective: 900, scale: .9 },
+      { opacity: 1, rotateX: 0, scale: 1, ease: 'power2.inOut', duration: .26 }, .66);
+
+
+  // ---------- Ribbon: screenshots weave through the headline ----------
+  const rcards = [...document.querySelectorAll('.rcard')];
+  const rib = { t: 0, drift: 0, active: false };
+  function renderRibbon() {
+    const W = window.innerWidth, H = window.innerHeight, n = rcards.length;
+    const cardW = rcards[0].offsetWidth || 200;
+    const spacing = Math.max(cardW * 1.05, W * 0.2);
+    const total = spacing * n;
+    const offset = rib.t * total * 0.9 + rib.drift;
+    const amp = Math.min(H * 0.2, 180);
+    rcards.forEach((c, i) => {
+      const x = ((((i * spacing - offset) % total) + total) % total) - total / 2;
+      const u = x / (W * 0.5);
+      const y = Math.sin(u * 1.7) * amp;
+      const depth = Math.cos(u * 2.3 + 0.6);
+      const slope = Math.cos(u * 1.7) * 1.7 * amp / (W * 0.5);
+      const s = 0.72 + 0.34 * (depth + 1) / 2;
+      const fade = gsap.utils.clamp(0, 1, 1.6 - Math.abs(u) * 0.75);
+      c.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) perspective(900px) rotateY(${(-u * 38).toFixed(1)}deg) rotateZ(${(Math.atan(slope) * 57.3).toFixed(1)}deg) scale(${s.toFixed(3)})`;
+      c.style.zIndex = depth > 0 ? 3 : 1;
+      c.style.opacity = fade.toFixed(3);
+    });
+  }
+  ScrollTrigger.create({
+    trigger: '.ribbon', start: 'top bottom', end: 'bottom top',
+    onToggle: self => { rib.active = self.isActive; }
+  });
+  gsap.ticker.add((_, dt) => {
+    if (!rib.active) return;
+    rib.drift += dt * 0.035;
+    renderRibbon();
+  });
+  gsap.timeline({
+    scrollTrigger: { trigger: '.ribbon', start: 'top top', end: () => '+=' + window.innerHeight * 1.2, pin: true, scrub: 1,
+      onUpdate: self => { rib.t = self.progress; } }
+  })
+    .fromTo('.ribbon__line:not(.ribbon__line--2)', { xPercent: -6 }, { xPercent: 2, ease: 'none', duration: 1 }, 0)
+    .fromTo('.ribbon__line--2', { xPercent: 6 }, { xPercent: -2, ease: 'none', duration: 1 }, 0);
+  renderRibbon();
 
   // ---------- Statement: words light up ----------
   gsap.to('.statement__text .w', {
@@ -312,6 +354,57 @@
   })
     .fromTo('.ring-wrap', { scale: .6, rotateX: 18 }, { scale: 1, rotateX: 6, ease: 'power2.out', duration: .2 }, 0)
     .to(spin, { a: -360 + step, ease: 'none', duration: 1, onUpdate: renderRing }, 0);
+
+
+  // ---------- Scatter to grid ----------
+  const acards = gsap.utils.toArray('.acard');
+  const seeds = acards.map((_, i) => {
+    const r = k => { const v = Math.sin((i + 1) * 9301 + k * 49297) * 233280; return v - Math.floor(v); };
+    return { x: r(1) - .5, y: r(2) - .5, rot: r(3) - .5, rx: r(4) - .5, ry: r(5) - .5, s: r(6) };
+  });
+  gsap.timeline({
+    scrollTrigger: { trigger: '.assemble', start: 'center center', end: () => '+=' + window.innerHeight * 1.1,
+      pin: true, scrub: 1, invalidateOnRefresh: true }
+  }).fromTo(acards, {
+    x: i => seeds[i].x * window.innerWidth * 0.9,
+    y: i => seeds[i].y * window.innerHeight * 0.9,
+    rotation: i => seeds[i].rot * 60,
+    rotateX: i => seeds[i].rx * 80,
+    rotateY: i => seeds[i].ry * 100,
+    scale: i => 0.45 + seeds[i].s * 0.35,
+    opacity: .35
+  }, { x: 0, y: 0, rotation: 0, rotateX: 0, rotateY: 0, scale: 1, opacity: 1, ease: 'power3.inOut', stagger: .06, duration: 1 });
+
+  // ---------- Mist: the dark page dissolves into paper ----------
+  const mist = document.querySelector('.mist');
+  const puffSpots = [[.1,.95],[.35,1.05],[.62,.98],[.9,1.02],[.2,.7],[.78,.72],[.5,.85],[.05,.45],[.95,.4],[.5,.5]];
+  const puffs = puffSpots.map(([px, py]) => {
+    const d = document.createElement('div');
+    d.className = 'mist__puff';
+    d.style.width = d.style.height = '70vmax';
+    d.style.left = `calc(${px * 100}% - 35vmax)`;
+    d.style.top = `calc(${py * 100}% - 35vmax)`;
+    mist.insertBefore(d, mist.firstChild);
+    return d;
+  });
+  gsap.timeline({
+    scrollTrigger: { trigger: mist, start: 'top top', end: () => '+=' + window.innerHeight * 1.3, pin: true, scrub: 1 }
+  })
+    .fromTo(puffs, { scale: .05, yPercent: 30, opacity: 0 },
+      { scale: 2.6, yPercent: -10, opacity: 1, ease: 'power2.out', stagger: .05, duration: .7 }, 0)
+    .to(mist, { backgroundColor: '#ece6da', ease: 'none', duration: .2 }, .6)
+    .fromTo('.mist__line', { opacity: 0, y: 40, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', ease: 'power2.out', duration: .25 }, .55)
+    .to({}, { duration: .15 });
+
+  // ---------- Incubateer block ----------
+  gsap.from('.inc__card', {
+    y: 80, scale: .94, opacity: 0, duration: 1.2, ease: 'expo.out',
+    scrollTrigger: { trigger: '.inc', start: 'top 80%' }
+  });
+  gsap.from('.inc__chip', {
+    y: 24, opacity: 0, stagger: .12, duration: .8, ease: 'back.out(1.8)',
+    scrollTrigger: { trigger: '.inc__chips', start: 'top 85%' }
+  });
 
   // ---------- About photo reveal ----------
   gsap.fromTo('.about__photo', { clipPath: 'inset(100% 0 0 0 round 16px)' }, {
