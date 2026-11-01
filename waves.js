@@ -1,4 +1,4 @@
-// Neon waterfall: 30+ glowing strands run top to bottom behind the whole page.
+// Silk waterfall: fine threads run top to bottom behind the whole page.
 // Light streaks and droplets pour down them. Scrolling speeds the flow, clicks and taps send a ripple.
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -9,7 +9,8 @@
   document.body.insertBefore(canvas, main || document.body.firstChild);
   const ctx = canvas.getContext('2d');
 
-  const palette = [[61, 255, 197], [46, 230, 255], [77, 141, 255], [155, 107, 255], [211, 107, 255]];
+  // muted mint, sage, soft sky and bone, taken from the site palette
+  const palette = [[163, 217, 197], [186, 214, 200], [156, 195, 230], [214, 226, 222], [236, 230, 218]];
   const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
   const colorAt = t => {
     const p = t * (palette.length - 1), i = Math.min(palette.length - 2, Math.floor(p));
@@ -30,22 +31,22 @@
     W = window.innerWidth; H = window.innerHeight;
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-    const n = W < 700 ? 32 : W < 1100 ? 38 : 46;
+    const n = W < 700 ? 40 : W < 1100 ? 52 : 64;
     lines = Array.from({ length: n }, (_, i) => {
       const near = Math.random();
       const dash = [rand(40, 170), rand(70, 260), rand(10, 50), rand(40, 140)];
       return {
         base: (i + 0.5 + rand(-0.3, 0.3)) / n,
-        rgb: colorAt(i / (n - 1)),
-        width: 1.5 + near * 2.3,
-        alpha: 0.4 + near * 0.45,
+        rgb: colorAt(Math.random()),
+        width: 0.6 + near * 1.0,
+        alpha: 0.16 + near * 0.34,
         k1: rand(0.0016, 0.003), k2: rand(0.0007, 0.0013),
         ph: rand(0, Math.PI * 2),
         amp: rand(4, 11),
         dash, dashLen: dash.reduce((a, b) => a + b, 0),
         off: rand(0, 600),
-        flow: 0.18 + near * 0.32,            // px per ms, nearer strands fall faster
-        drops: Array.from({ length: Math.random() < 0.6 ? 2 : 1 }, () => ({ y: rand(-H, H), speed: rand(0.45, 0.9) }))
+        flow: 0.12 + near * 0.26,            // px per ms, nearer threads fall faster
+        drops: Math.random() < 0.3 ? [{ y: rand(-H, H), speed: rand(0.35, 0.7) }] : []
       };
     });
   }
@@ -100,15 +101,15 @@
 
       // dim base strand
       ctx.setLineDash([]);
-      ctx.strokeStyle = `rgba(${r},${g},${b},${(L.alpha * 0.22).toFixed(3)})`;
-      ctx.lineWidth = L.width * 0.7;
+      ctx.strokeStyle = `rgba(${r},${g},${b},${(L.alpha * 0.35).toFixed(3)})`;
+      ctx.lineWidth = L.width * 0.8;
       ctx.stroke();
 
       // falling streaks: glow then core
       ctx.setLineDash(L.dash);
       ctx.lineDashOffset = L.off;
-      ctx.strokeStyle = `rgba(${r},${g},${b},${(L.alpha * 0.18).toFixed(3)})`;
-      ctx.lineWidth = L.width * 5;
+      ctx.strokeStyle = `rgba(${r},${g},${b},${(L.alpha * 0.1).toFixed(3)})`;
+      ctx.lineWidth = L.width * 3.2;
       ctx.stroke();
       ctx.strokeStyle = `rgba(${r},${g},${b},${L.alpha.toFixed(3)})`;
       ctx.lineWidth = L.width;
@@ -119,20 +120,20 @@
         d.y += d.speed * dt * rush;
         if (d.y > H + 40) d.y = rand(-260, -40);
         const sx = xAt(L, d.y, time);
-        const grd = ctx.createRadialGradient(sx, d.y, 0, sx, d.y, 9);
-        grd.addColorStop(0, 'rgba(255,255,255,.95)');
-        grd.addColorStop(.35, `rgba(${r},${g},${b},.55)`);
+        const grd = ctx.createRadialGradient(sx, d.y, 0, sx, d.y, 5);
+        grd.addColorStop(0, 'rgba(245,245,240,.7)');
+        grd.addColorStop(.4, `rgba(${r},${g},${b},.35)`);
         grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
         ctx.fillStyle = grd;
-        ctx.fillRect(sx - 9, d.y - 9, 18, 18);
+        ctx.fillRect(sx - 5, d.y - 5, 10, 10);
       }
     }
     ctx.setLineDash([]);
 
     // mist where the water lands
     const mist = ctx.createLinearGradient(0, H - 160, 0, H);
-    mist.addColorStop(0, 'rgba(46,230,255,0)');
-    mist.addColorStop(1, `rgba(120,200,255,${(0.07 + energy * 0.08).toFixed(3)})`);
+    mist.addColorStop(0, 'rgba(163,217,197,0)');
+    mist.addColorStop(1, `rgba(186,214,220,${(0.04 + energy * 0.05).toFixed(3)})`);
     ctx.fillStyle = mist;
     ctx.fillRect(0, H - 160, W, 160);
 
