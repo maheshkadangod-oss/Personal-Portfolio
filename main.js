@@ -328,16 +328,42 @@
     mist.insertBefore(d, mist.firstChild);
     return d;
   });
+  // The sea video: the right shape for the screen, loaded only as the visitor gets close,
+  // then scrubbed by scroll so the ship sails forward and back with the page.
+  const seaVid = document.querySelector('.sea__video');
+  const sea = { p: 0, shown: -1 };
+  function pickSea() {
+    const k = window.innerHeight > window.innerWidth ? 'tall' : 'wide';
+    if (seaVid.dataset.cur === k) return;
+    seaVid.dataset.cur = k;
+    seaVid.poster = seaVid.dataset[k + 'Poster'];
+    seaVid.src = seaVid.dataset[k];
+    seaVid.load();
+    sea.shown = -1;
+  }
+  ScrollTrigger.create({ trigger: mist, start: 'top bottom+=150%', once: true, onEnter: pickSea });
+  window.addEventListener('resize', () => { if (seaVid.dataset.cur) pickSea(); });
+  // iOS only lets a video seek after it has played once
+  window.addEventListener('touchstart', () => { const pr = seaVid.play(); if (pr) pr.then(() => seaVid.pause()).catch(() => {}); }, { once: true, passive: true });
+  function seekSea() {
+    if (!seaVid.dataset.cur) pickSea();
+    const d = seaVid.duration;
+    if (!d || seaVid.seeking) return;
+    const t = Math.min(d - 0.05, sea.p * d);
+    if (Math.abs(t - sea.shown) > 1 / 48) { seaVid.currentTime = t; sea.shown = t; }
+  }
+  seaVid.addEventListener('seeked', seekSea);
+  seaVid.addEventListener('loadedmetadata', seekSea);
+
   gsap.timeline({
-    scrollTrigger: { trigger: mist, start: 'top top', end: () => '+=' + window.innerHeight * 1.6, pin: true, scrub: 1, invalidateOnRefresh: true }
+    scrollTrigger: { trigger: mist, start: 'top top', end: () => '+=' + window.innerHeight * 1.8, pin: true, scrub: 1, invalidateOnRefresh: true }
   })
-    // the ship sails across, its smoke swells into the fog, then the fog takes the scene
-    .fromTo('.ship', { x: () => -window.innerWidth * (window.innerWidth < 700 ? 0.1 : 0.26) }, { x: () => window.innerWidth * (window.innerWidth < 700 ? 0.3 : 0.42), ease: 'none', duration: .8 }, 0)
-    .to('.ship__smoke', { scale: 3, ease: 'power1.in', duration: .55 }, .05)
-    .to('.sea__caption', { opacity: 0, y: -40, ease: 'power1.in', duration: .2 }, .3)
-    .to('.sea', { opacity: 0, ease: 'none', duration: .2 }, .5)
+    // the ship sails, its smoke and the sea fog swallow it, then the fog takes the page
+    .to(sea, { p: 1, ease: 'none', duration: .62, onUpdate: seekSea }, 0)
+    .to('.sea__caption', { opacity: 0, y: -40, ease: 'power1.in', duration: .15 }, .3)
     .fromTo(puffs, { scale: .05, yPercent: 30, opacity: 0 },
-      { scale: 2.6, yPercent: -10, opacity: 1, ease: 'power2.in', stagger: .05, duration: .6 }, .15)
+      { scale: 2.6, yPercent: -10, opacity: 1, ease: 'power2.in', stagger: .03, duration: .25 }, .58)
+    .to('.sea', { opacity: 0, ease: 'none', duration: .1 }, .7)
     .to(mist, { backgroundColor: '#ece6da', ease: 'none', duration: .2 }, .6)
     .fromTo('.mist__line', { opacity: 0, y: 40, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', ease: 'power2.out', duration: .22 }, .68)
     .to({}, { duration: .15 });
