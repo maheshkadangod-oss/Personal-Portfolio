@@ -329,12 +329,17 @@
     return d;
   });
   gsap.timeline({
-    scrollTrigger: { trigger: mist, start: 'top top', end: () => '+=' + window.innerHeight * 1.3, pin: true, scrub: 1 }
+    scrollTrigger: { trigger: mist, start: 'top top', end: () => '+=' + window.innerHeight * 1.6, pin: true, scrub: 1, invalidateOnRefresh: true }
   })
+    // the ship sails across, its smoke swells into the fog, then the fog takes the scene
+    .fromTo('.ship', { x: () => -window.innerWidth * (window.innerWidth < 700 ? 0.1 : 0.26) }, { x: () => window.innerWidth * (window.innerWidth < 700 ? 0.3 : 0.42), ease: 'none', duration: .8 }, 0)
+    .to('.ship__smoke', { scale: 3, ease: 'power1.in', duration: .55 }, .05)
+    .to('.sea__caption', { opacity: 0, y: -40, ease: 'power1.in', duration: .2 }, .3)
+    .to('.sea', { opacity: 0, ease: 'none', duration: .2 }, .5)
     .fromTo(puffs, { scale: .05, yPercent: 30, opacity: 0 },
-      { scale: 2.6, yPercent: -10, opacity: 1, ease: 'power2.out', stagger: .05, duration: .7 }, 0)
+      { scale: 2.6, yPercent: -10, opacity: 1, ease: 'power2.in', stagger: .05, duration: .6 }, .15)
     .to(mist, { backgroundColor: '#ece6da', ease: 'none', duration: .2 }, .6)
-    .fromTo('.mist__line', { opacity: 0, y: 40, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', ease: 'power2.out', duration: .25 }, .55)
+    .fromTo('.mist__line', { opacity: 0, y: 40, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', ease: 'power2.out', duration: .22 }, .68)
     .to({}, { duration: .15 });
 
   // ---------- Incubateer block ----------

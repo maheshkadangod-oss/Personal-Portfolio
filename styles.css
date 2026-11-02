@@ -601,3 +601,71 @@ body::after {
 @media (max-width: 700px) {
   .assemble__grid .acard:last-child:nth-child(even) { grid-column: span 2; }
 }
+
+/* ---------- Night sea in the mist section: a ship sails into the fog ---------- */
+.mist__puff { z-index: 2; }
+.mist__line { z-index: 3; }
+.sea { position: absolute; inset: 0; z-index: 1; overflow: hidden;
+  background: radial-gradient(120% 70% at 75% 10%, rgba(18,50,74,.75) 0%, rgba(14,16,15,0) 60%), linear-gradient(180deg, #0b1213 0%, #0f1b1f 58%, #0e100f 100%); }
+.sea__stars { position: absolute; inset: 0 0 40% 0; opacity: .8; animation: twinkle 5s ease-in-out infinite alternate;
+  background-image:
+    radial-gradient(1.4px 1.4px at 8% 18%, #e8f3ee 50%, transparent 51%), radial-gradient(1px 1px at 18% 42%, #cfe2f4 50%, transparent 51%),
+    radial-gradient(1.6px 1.6px at 27% 12%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 38% 30%, #d9d2f2 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 47% 8%, #e8f3ee 50%, transparent 51%), radial-gradient(1px 1px at 55% 46%, #cfe2f4 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 63% 22%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 88% 52%, #d9d2f2 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 93% 14%, #e8f3ee 50%, transparent 51%), radial-gradient(1px 1px at 4% 60%, #cfe2f4 50%, transparent 51%),
+    radial-gradient(1px 1px at 33% 64%, #fff 50%, transparent 51%), radial-gradient(1.2px 1.2px at 70% 6%, #d9d2f2 50%, transparent 51%); }
+@keyframes twinkle { to { opacity: .35; } }
+.sea__moon { position: absolute; top: 11%; right: 14%; width: clamp(70px, 11vmin, 130px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 38% 36%, #f4f8f6 0%, #d8ece4 45%, #a9cfe0 100%);
+  box-shadow: 0 0 60px 20px rgba(163,217,197,.22), 0 0 180px 80px rgba(156,195,230,.14); }
+.sea__water { position: absolute; left: 0; right: 0; top: 60%; bottom: 0; background: linear-gradient(180deg, #10303a 0%, #0b1c1d 22%, #0b1c1d 45%, #0a1110 100%); }
+.sea__shine { position: absolute; top: 0; right: calc(14% + clamp(35px, 5.5vmin, 65px) - 60px); width: 120px; height: 100%; opacity: .55;
+  background: repeating-linear-gradient(180deg, rgba(200,236,224,.55) 0 2px, transparent 2px 9px);
+  -webkit-mask: radial-gradient(50% 100% at 50% 0%, #000 0%, transparent 100%); mask: radial-gradient(50% 100% at 50% 0%, #000 0%, transparent 100%);
+  animation: shine 2.4s ease-in-out infinite alternate; }
+@keyframes shine { from { transform: scaleX(.75); opacity: .35; } to { transform: scaleX(1.15); opacity: .6; } }
+.sea__wave { position: absolute; left: 0; width: 200%; height: 90px; animation: drift 22s linear infinite; }
+.sea__wave .crest { fill: none; stroke: rgba(163,217,197,.22); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.sea__wave--1 { top: -34px; fill: #12324a; opacity: .75; animation-duration: 30s; }
+.sea__wave--2 { top: -22px; fill: #0f2a30; animation-duration: 21s; animation-direction: reverse; }
+.sea__wave--3 { top: -6px; height: 110px; fill: #0b1c1d; z-index: 3; animation-duration: 15s; }
+@keyframes drift { to { transform: translateX(-50%); } }
+
+.ship { position: absolute; z-index: 2; left: 50%; top: 60%; width: clamp(240px, 34vw, 560px); margin-left: calc(clamp(240px, 34vw, 560px) / -2);
+  transform-origin: 50% 100%; will-change: transform; }
+.ship__bob { position: relative; transform: translateY(-82%); animation: bob 4.2s ease-in-out infinite; transform-origin: 50% 90%; }
+@keyframes bob { 0%, 100% { translate: 0 0; rotate: -1.2deg; } 50% { translate: 0 6px; rotate: 1.2deg; } }
+.ship__svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 0 24px rgba(163,217,197,.15)); }
+.ship__light { animation: blink 1.8s ease-in-out infinite; }
+.ship__light--2 { animation-delay: .9s; }
+@keyframes blink { 50% { opacity: .25; } }
+.ship__smoke { position: absolute; left: 24.5%; top: 4%; width: 0; height: 0; transform-origin: 0 0; }
+.ship__smoke i { position: absolute; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(226,236,232,.55) 0%, rgba(200,222,230,.25) 45%, rgba(200,222,230,0) 70%);
+  animation: smoke 6s linear infinite; opacity: 0; }
+.ship__smoke i:nth-child(2) { animation-delay: -.75s; } .ship__smoke i:nth-child(3) { animation-delay: -1.5s; }
+.ship__smoke i:nth-child(4) { animation-delay: -2.25s; } .ship__smoke i:nth-child(5) { animation-delay: -3s; }
+.ship__smoke i:nth-child(6) { animation-delay: -3.75s; } .ship__smoke i:nth-child(7) { animation-delay: -4.5s; }
+.ship__smoke i:nth-child(8) { animation-delay: -5.25s; }
+@keyframes smoke {
+  0% { transform: translate(0, 0) scale(.4); opacity: 0; }
+  12% { opacity: .9; }
+  100% { transform: translate(-190px, -120px) scale(5); opacity: 0; }
+}
+.ship__wake { position: absolute; right: 58%; bottom: 8%; width: 70%; height: 10%; border-radius: 50%;
+  background: linear-gradient(270deg, rgba(200,236,224,.45), rgba(200,236,224,0)); filter: blur(4px); animation: shine 1.6s ease-in-out infinite alternate; }
+
+.sea__caption { position: absolute; z-index: 1; left: var(--gutter); top: clamp(90px, 16vh, 160px); max-width: 560px; margin: 0;
+  font-size: clamp(28px, 4vw, 58px); font-weight: 500; letter-spacing: -0.04em; line-height: 1.02; color: var(--ink); }
+.sea__caption .eyebrow { display: block; margin-bottom: 14px; }
+.sea__caption em { font-family: var(--serif); font-weight: 400; background-image: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
+@media (max-width: 700px) {
+  .ship { width: 78vw; margin-left: -39vw; top: 64%; }
+  .sea__water { top: 64%; }
+  .sea__moon { top: 34%; right: 10%; }
+  .sea__shine { right: calc(10% + 35px - 60px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sea *, .sea__stars { animation: none !important; }
+}
