@@ -15,8 +15,11 @@
 - What it does: indexes 8,500+ grants and programmes, reads each one's eligibility rules and scores it against a startup's stage, sector and state.
 - Scores: strong match, worth a look, long shot, likely not eligible. Each score comes with the reason behind it.
 - Coverage: India-first (2,800+ India grants and schemes), 130+ Middle East programmes, open to founders anywhere. 650+ investors and VC firms are counted separately.
-- It never submits applications on a founder's behalf.
-- Status: early access.
+- It never submits applications on a founder's behalf. AI tools draft, the founder edits and submits.
+- Apply links are re-checked weekly. Dead links are removed from the catalogue.
+- Incubators and accelerators can use it to push grants to their cohort and track who applied and who won.
+- Languages: English, Hindi, Malayalam, Telugu and Bengali.
+- Status: early access. No charge today and no card at signup. Paid plans will be published before anyone is asked to pay.
 - More: https://mahesh-portfolio-mocha-omega.vercel.app/incubateer
 
 ## Website templates
