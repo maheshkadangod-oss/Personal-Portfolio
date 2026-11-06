@@ -624,29 +624,3 @@ body.is-loading .wa-float { transform: translateY(140%); opacity: 0; }
 @media (max-width: 700px) and (orientation: portrait) { .sea__caption { top: 27%; right: var(--gutter); } }
 .sea__caption em { font-family: var(--serif); font-weight: 400; background-image: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
 
-/* ---------- Contact form ---------- */
-.cform { max-width: 760px; margin: clamp(40px, 7vh, 72px) 0 clamp(48px, 8vh, 88px); display: grid; gap: 16px; }
-.cform__head { margin: 0 0 4px; color: rgba(236,230,218,.75); font-size: clamp(16px, 1.2vw, 19px); }
-.cform__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.cform__field { display: grid; gap: 8px; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: rgba(236,230,218,.6); }
-.cform__field em { font-style: normal; text-transform: none; letter-spacing: 0; opacity: .7; }
-.cform input, .cform select, .cform textarea {
-  width: 100%; font: inherit; font-size: 16px; letter-spacing: 0; text-transform: none; color: var(--ink);
-  background: rgba(236,230,218,.06); border: 1px solid rgba(236,230,218,.22); border-radius: 14px; padding: 14px 16px;
-  transition: border-color .25s, background-color .25s; appearance: none; -webkit-appearance: none;
-}
-.cform select { background-image: linear-gradient(45deg, transparent 50%, rgba(236,230,218,.7) 50%), linear-gradient(135deg, rgba(236,230,218,.7) 50%, transparent 50%);
-  background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
-.cform select option { color: #111; }
-.cform textarea { resize: vertical; min-height: 120px; }
-.cform input:focus, .cform select:focus, .cform textarea:focus { outline: none; border-color: var(--g-mint); background-color: rgba(236,230,218,.1); }
-.cform .is-bad { border-color: #f0a3a3; }
-.cform__trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-.cform__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 4px; }
-.cform__foot .btn { border: 0; cursor: pointer; }
-.cform__foot .btn[disabled] { opacity: .6; cursor: wait; }
-.cform__status { margin: 0; font-size: 15px; color: rgba(236,230,218,.8); }
-.cform__status.ok { color: var(--g-mint); }
-.cform__status.err { color: #f0b3b3; }
-.cform__status a { text-decoration: underline; }
-@media (max-width: 700px) { .cform__row { grid-template-columns: 1fr; } }

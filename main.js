@@ -477,34 +477,3 @@
   window.addEventListener('load', () => ScrollTrigger.refresh());
 })();
 
-// ---------- Contact form: send to Gmail through FormSubmit, no page reload ----------
-(() => {
-  const f = document.getElementById('cform'); if (!f) return;
-  const status = f.querySelector('.cform__status'), btn = f.querySelector('button[type=submit]');
-  const say = (msg, cls) => { status.className = 'cform__status ' + (cls || ''); status.innerHTML = msg; };
-  f.addEventListener('submit', async e => {
-    e.preventDefault();
-    if (f._honey.value) return;
-    let bad = null;
-    f.querySelectorAll('[required]').forEach(el => { const ok = el.checkValidity() && el.value.trim(); el.classList.toggle('is-bad', !ok); if (!ok && !bad) bad = el; });
-    if (bad) { say('Please fill in your name, a valid email and a message.', 'err'); bad.focus(); return; }
-    btn.disabled = true; say('Sending...');
-    try {
-      const r = await fetch('https://formsubmit.co/ajax/maheshkadangod@gmail.com', { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(f) });
-      const d = await r.json().catch(() => ({}));
-      if (!r.ok || String(d.success) === 'false') throw new Error(d.message || 'failed');
-      f.reset(); say('Thanks. Your message is in my inbox, and I usually reply within a day.', 'ok');
-    } catch (err) {
-      // The quick send failed (form not activated yet, a blocker, or a network hiccup).
-      // Fall back to a normal form post: FormSubmit handles it on its own page, then sends the visitor back here.
-      say('One moment...');
-      HTMLFormElement.prototype.submit.call(f);
-      return;
-    } finally { btn.disabled = false; }
-  });
-  f.querySelectorAll('[required]').forEach(el => el.addEventListener('input', () => el.classList.remove('is-bad')));
-  if (/[?&]sent=1/.test(location.search)) {
-    say('Thanks. Your message is in my inbox, and I usually reply within a day.', 'ok');
-    history.replaceState(null, '', location.pathname + location.hash);
-  }
-})();
