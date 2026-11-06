@@ -595,6 +595,33 @@
         <a class="btn btn--ghost" href="tel:+919061463367" data-cursor="Call">Call +91 90614 63367</a>
       </div>
       <a class="contact__email" href="mailto:maheshkadangod@gmail.com" data-cursor="Email">maheshkadangod@gmail.com <span aria-hidden="true">↗</span></a>
+      <form class="cform" id="cform" action="https://formsubmit.co/maheshkadangod@gmail.com" method="POST" novalidate>
+        <p class="cform__head">Or leave a note here. It lands in my inbox and I reply within a day.</p>
+        <input type="hidden" name="_subject" value="New message from your portfolio">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" class="cform__trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="cform__row">
+          <label class="cform__field"><span>Your name</span><input type="text" name="name" required autocomplete="name" maxlength="80"></label>
+          <label class="cform__field"><span>Email</span><input type="email" name="email" required autocomplete="email" maxlength="120"></label>
+        </div>
+        <div class="cform__row">
+          <label class="cform__field"><span>Phone or WhatsApp <em>(optional)</em></span><input type="tel" name="phone" autocomplete="tel" maxlength="30"></label>
+          <label class="cform__field"><span>About</span>
+            <select name="topic">
+              <option>A website for my business</option>
+              <option>Speaking or a podcast</option>
+              <option>Incubateer</option>
+              <option>Something else</option>
+            </select>
+          </label>
+        </div>
+        <label class="cform__field"><span>Message</span><textarea name="message" rows="4" required maxlength="3000"></textarea></label>
+        <div class="cform__foot">
+          <button class="btn btn--light" type="submit" data-cursor="Send">Send message <span aria-hidden="true">↗</span></button>
+          <p class="cform__status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
       <div class="contact__grid">
         <div>
           <p class="dim">Elsewhere</p>

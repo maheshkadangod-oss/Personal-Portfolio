@@ -25,7 +25,6 @@
 
   if (!hasGsap || reduce) {
     document.documentElement.classList.add('no-motion');
-    const waf = document.querySelector('.wa-float'); if (waf) waf.classList.add('is-on');
     document.getElementById('loader').remove();
     document.body.classList.remove('is-loading');
     return;
@@ -393,13 +392,6 @@
     toggleClass: { targets: '.nav', className: 'on-accent' }
   });
 
-  // ---------- Floating WhatsApp: shows after the hero, hides over the contact block ----------
-  const wa = document.querySelector('.wa-float');
-  const waState = { past: false, atContact: false };
-  const waSet = () => wa.classList.toggle('is-on', waState.past && !waState.atContact);
-  ScrollTrigger.create({ trigger: '.ribbon', start: 'top 80%', onToggle: s => { waState.past = s.isActive || s.progress > 0; waSet(); }, end: 'max' });
-  ScrollTrigger.create({ trigger: '.contact', start: 'top 85%', end: 'max', onToggle: s => { waState.atContact = s.isActive; waSet(); } });
-
   // ---------- Contact rises up ----------
   gsap.from('.contact', {
     borderRadius: '80px 80px 0 0', y: 60, ease: 'none',
@@ -483,4 +475,28 @@
   }
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
+})();
+
+// ---------- Contact form: send to Gmail through FormSubmit, no page reload ----------
+(() => {
+  const f = document.getElementById('cform'); if (!f) return;
+  const status = f.querySelector('.cform__status'), btn = f.querySelector('button[type=submit]');
+  const say = (msg, cls) => { status.className = 'cform__status ' + (cls || ''); status.innerHTML = msg; };
+  f.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (f._honey.value) return;
+    let bad = null;
+    f.querySelectorAll('[required]').forEach(el => { const ok = el.checkValidity() && el.value.trim(); el.classList.toggle('is-bad', !ok); if (!ok && !bad) bad = el; });
+    if (bad) { say('Please fill in your name, a valid email and a message.', 'err'); bad.focus(); return; }
+    btn.disabled = true; say('Sending...');
+    try {
+      const r = await fetch('https://formsubmit.co/ajax/maheshkadangod@gmail.com', { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(f) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || String(d.success) === 'false') throw new Error(d.message || 'failed');
+      f.reset(); say('Thanks. Your message is in my inbox, and I usually reply within a day.', 'ok');
+    } catch (err) {
+      say('That did not go through. Email me at <a href="mailto:maheshkadangod@gmail.com">maheshkadangod@gmail.com</a> or <a href="https://wa.me/919061463367" target="_blank" rel="noopener">WhatsApp me</a>.', 'err');
+    } finally { btn.disabled = false; }
+  });
+  f.querySelectorAll('[required]').forEach(el => el.addEventListener('input', () => el.classList.remove('is-bad')));
 })();

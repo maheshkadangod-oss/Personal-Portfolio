@@ -515,14 +515,21 @@ body::after {
 .contact .btn--ghost { border-color: rgba(236,230,218,.4); color: var(--ink); }
 .wa-float {
   position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 60;
-  display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px 12px 14px; border-radius: 99px;
-  background: linear-gradient(110deg, #f4f8f5 0%, #dff2ea 55%, #dbe8f6 100%); color: #063f37; font-weight: 600; font-size: 15px;
-  box-shadow: 0 16px 40px -12px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.2);
-  transform: translateY(140%); opacity: 0; transition: transform .5s var(--ease), opacity .4s;
+  display: inline-flex; align-items: center; gap: 9px; padding: 13px 20px 13px 15px; border-radius: 99px;
+  background: #25d366; color: #fff; font-weight: 700; font-size: 15px; letter-spacing: .01em;
+  box-shadow: 0 14px 34px -10px rgba(18,140,74,.75), 0 2px 6px rgba(0,0,0,.18);
+  transition: transform .5s var(--ease), opacity .4s, background-color .25s, box-shadow .25s;
 }
-.wa-float svg { width: 20px; height: 20px; }
-.wa-float.is-on { transform: none; opacity: 1; }
-@media (max-width: 520px) { .wa-float span { display: none; } .wa-float { padding: 14px; } }
+.wa-float::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; background: #25d366; z-index: -1;
+  animation: wa-ring 2.8s ease-out infinite;
+}
+@keyframes wa-ring { 0% { transform: scale(1); opacity: .55; } 70%, 100% { transform: scale(1.45); opacity: 0; } }
+.wa-float:hover { background: #1ebe5b; transform: translateY(-2px); box-shadow: 0 18px 40px -10px rgba(18,140,74,.85), 0 2px 6px rgba(0,0,0,.18); }
+.wa-float svg { width: 22px; height: 22px; }
+body.is-loading .wa-float { transform: translateY(140%); opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .wa-float::before { animation: none; opacity: 0; } }
+@media (max-width: 520px) { .wa-float span { display: none; } .wa-float { padding: 15px; } .wa-float svg { width: 26px; height: 26px; } }
 
 /* ---------- Contact ---------- */
 .contact {
@@ -616,3 +623,30 @@ body::after {
 .sea__caption .eyebrow { display: block; margin-bottom: 14px; }
 @media (max-width: 700px) and (orientation: portrait) { .sea__caption { top: 27%; right: var(--gutter); } }
 .sea__caption em { font-family: var(--serif); font-weight: 400; background-image: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
+
+/* ---------- Contact form ---------- */
+.cform { max-width: 760px; margin: clamp(40px, 7vh, 72px) 0 clamp(48px, 8vh, 88px); display: grid; gap: 16px; }
+.cform__head { margin: 0 0 4px; color: rgba(236,230,218,.75); font-size: clamp(16px, 1.2vw, 19px); }
+.cform__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cform__field { display: grid; gap: 8px; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: rgba(236,230,218,.6); }
+.cform__field em { font-style: normal; text-transform: none; letter-spacing: 0; opacity: .7; }
+.cform input, .cform select, .cform textarea {
+  width: 100%; font: inherit; font-size: 16px; letter-spacing: 0; text-transform: none; color: var(--ink);
+  background: rgba(236,230,218,.06); border: 1px solid rgba(236,230,218,.22); border-radius: 14px; padding: 14px 16px;
+  transition: border-color .25s, background-color .25s; appearance: none; -webkit-appearance: none;
+}
+.cform select { background-image: linear-gradient(45deg, transparent 50%, rgba(236,230,218,.7) 50%), linear-gradient(135deg, rgba(236,230,218,.7) 50%, transparent 50%);
+  background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
+.cform select option { color: #111; }
+.cform textarea { resize: vertical; min-height: 120px; }
+.cform input:focus, .cform select:focus, .cform textarea:focus { outline: none; border-color: var(--g-mint); background-color: rgba(236,230,218,.1); }
+.cform .is-bad { border-color: #f0a3a3; }
+.cform__trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.cform__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 4px; }
+.cform__foot .btn { border: 0; cursor: pointer; }
+.cform__foot .btn[disabled] { opacity: .6; cursor: wait; }
+.cform__status { margin: 0; font-size: 15px; color: rgba(236,230,218,.8); }
+.cform__status.ok { color: var(--g-mint); }
+.cform__status.err { color: #f0b3b3; }
+.cform__status a { text-decoration: underline; }
+@media (max-width: 700px) { .cform__row { grid-template-columns: 1fr; } }
