@@ -495,8 +495,16 @@
       if (!r.ok || String(d.success) === 'false') throw new Error(d.message || 'failed');
       f.reset(); say('Thanks. Your message is in my inbox, and I usually reply within a day.', 'ok');
     } catch (err) {
-      say('That did not go through. Email me at <a href="mailto:maheshkadangod@gmail.com">maheshkadangod@gmail.com</a> or <a href="https://wa.me/919061463367" target="_blank" rel="noopener">WhatsApp me</a>.', 'err');
+      // The quick send failed (form not activated yet, a blocker, or a network hiccup).
+      // Fall back to a normal form post: FormSubmit handles it on its own page, then sends the visitor back here.
+      say('One moment...');
+      HTMLFormElement.prototype.submit.call(f);
+      return;
     } finally { btn.disabled = false; }
   });
   f.querySelectorAll('[required]').forEach(el => el.addEventListener('input', () => el.classList.remove('is-bad')));
+  if (/[?&]sent=1/.test(location.search)) {
+    say('Thanks. Your message is in my inbox, and I usually reply within a day.', 'ok');
+    history.replaceState(null, '', location.pathname + location.hash);
+  }
 })();
